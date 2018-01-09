@@ -173,7 +173,7 @@ function completeConfigSetup(config, next) {
 function setupDefaultConfigs(next) {
 	console.log('Populating database with default configs, if not already set...');
 	var meta = require('../service/meta/index');
-	var defaults = require(path.join(__dirname, '../', 'install/data/defaults.json'));
+	var defaults = require(path.join(__dirname, '../../', 'install/data/defaults.json'));
 
 	meta.configs.setOnEmpty(defaults, function (err) {
 		if (err) {
@@ -368,7 +368,7 @@ function createCategories(next) {
 
 		console.log('No categories found, populating instance with default categories');
 
-		fs.readFile(path.join(__dirname, '../', 'install/data/categories.json'), 'utf8', function (err, default_categories) {
+		fs.readFile(path.join(__dirname, '../../', 'install/data/categories.json'), 'utf8', function (err, default_categories) {
 			if (err) {
 				return next(err);
 			}
@@ -399,7 +399,7 @@ function createWelcomePost(next) {
 
 	async.parallel([
 		function (next) {
-			fs.readFile(path.join(__dirname, '../', 'install/data/welcome.md'), 'utf8', next);
+			fs.readFile(path.join(__dirname, '../../', 'install/data/welcome.md'), 'utf8', next);
 		},
 		function (next) {
 			db.getObjectField('global', 'topicCount', next);
@@ -470,7 +470,7 @@ function setCopyrightWidget(next) {
 	var db = require('../common/database');
 	async.parallel({
 		footerJSON: function (next) {
-			fs.readFile(path.join(__dirname, '../', 'install/data/footer.json'), 'utf8', next);
+			fs.readFile(path.join(__dirname, '../../', 'install/data/footer.json'), 'utf8', next);
 		},
 		footer: function (next) {
 			db.getObjectField('widgets:global', 'footer', next);
@@ -531,10 +531,10 @@ install.setup = function (callback) {
 };
 
 install.save = function (server_conf, callback) {
-	var serverConfigPath = path.join(__dirname, '../config.json');
+	var serverConfigPath = path.join(__dirname, '../../config.json');
 
 	if (nconf.get('config')) {
-		serverConfigPath = path.resolve(__dirname, '../', nconf.get('config'));
+		serverConfigPath = path.resolve(__dirname, '../../', nconf.get('config'));
 	}
 
 	fs.writeFile(serverConfigPath, JSON.stringify(server_conf, null, 4), function (err) {

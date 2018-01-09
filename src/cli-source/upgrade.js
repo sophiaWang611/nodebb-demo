@@ -48,7 +48,7 @@ Upgrade.appendPluginScripts = function (files, callback) {
 		// Read plugin.json and check for upgrade scripts
 		function (plugins, next) {
 			async.each(plugins, function (plugin, next) {
-				var configPath = path.join(__dirname, '../node_modules', plugin, 'plugin.json');
+				var configPath = path.join(__dirname, '../../node_modules', plugin, 'plugin.json');
 				try {
 					var pluginConfig = require(configPath);
 					if (pluginConfig.hasOwnProperty('upgrades') && Array.isArray(pluginConfig.upgrades)) {

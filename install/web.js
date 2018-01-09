@@ -72,10 +72,35 @@ function launchExpress(port) {
 }
 
 function setupRoutes() {
+	app.get('/', welcome);
 	app.post('/', install);
 	app.post('/launch', launch);
 }
 
+function welcome(req, res) {
+	var dbs = ['redis', 'mongo'];
+	var databases = dbs.map(function (databaseName) {
+		var questions = require('../src/database/' + databaseName).questions.filter(function (question) {
+			return question && !question.hideOnWebInstall;
+		});
+
+		return {
+			name: databaseName,
+			questions: questions,
+		};
+	});
+
+	var defaults = require('./data/defaults');
+
+	res.render('install/index', {
+		databases: databases,
+		skipDatabaseSetup: !!nconf.get('database'),
+		error: !!res.locals.error,
+		success: !!res.locals.success,
+		values: req.body,
+		minimumPasswordLength: defaults.minimumPasswordLength,
+	});
+}
 
 function install(req, res) {
 	for (var i in req.body) {

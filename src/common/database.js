@@ -9,6 +9,6 @@ if (!databaseName) {
 	process.exit();
 }
 
-var primaryDB = require('./database/' + databaseName);
+var primaryDB = require('../database/' + databaseName);
 
 module.exports = primaryDB;

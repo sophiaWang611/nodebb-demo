@@ -68,7 +68,7 @@ function start(options) {
 	return child;
 }
 
-function stop() {
+function stop(callback) {
 	getRunningPid(function (err, pid) {
 		if (!err) {
 			process.kill(pid, 'SIGTERM');
@@ -76,6 +76,7 @@ function stop() {
 		} else {
 			console.log('NodeBB is already stopped.');
 		}
+		callback && callback();
 	});
 }
 

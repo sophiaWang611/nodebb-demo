@@ -110,10 +110,12 @@ program
 	})
 	.description('Start NodeBB in verbose development mode')
 	.action(function () {
-		program.dev = true;
-		process.env.NODE_ENV = 'development';
-		global.env = 'development';
-		require('./running').start(program);
+		require('./running').stop(function() {
+			program.dev = true;
+			process.env.NODE_ENV = 'development';
+			global.env = 'development';
+			require('./running').start(program);
+		});
 	});
 program
 	.command('stop')

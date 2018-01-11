@@ -33,9 +33,6 @@ start.start = function () {
 						setImmediate(next);
 					}
 				},
-				function (next) {
-					require('./upgrade').check(next);
-				},
 			], function (err) {
 				next(err);
 			});
